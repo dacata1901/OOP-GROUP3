@@ -34,28 +34,6 @@ Project sử dụng các khái niệm:
 
 - **STL (Standard Template Library)**  
   → Sử dụng `vector` để lưu trữ dữ liệu
-
----
-
-## 🏗️ Cấu trúc project
-src/
-│── main.cpp
-│── Game.cpp / Game.h
-│── GameComponent.h
-│── WordManager.cpp / WordManager.h
-│── Level.cpp / Level.h
-│── InputHandler.cpp / InputHandler.h
-│── UI.cpp / UI.h
-
-data/
-│── words.txt
-
-docs/
-│── task_group01.xlsx
-
-
----
-
 ## 👥 Thành viên nhóm
 
 - Lê Minh Khang – 095206004843 – Game Controller (Leader)  
