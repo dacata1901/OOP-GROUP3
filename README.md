@@ -42,4 +42,3 @@ Project sử dụng các khái niệm:
 - Nguyễn Đình Huy – 054205007399 – Input Checker  
 - Lê Minh Tài – 074205003906 – UI + Feature  
 
-LÊ MINH KHANG 
