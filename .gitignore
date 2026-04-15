@@ -1,0 +1,17 @@
+
+---
+
+# 📄 **.gitignore (CẦN THIẾT)**
+
+```bash
+# Ignore compiled files
+*.exe
+*.out
+*.o
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore build folder
+/build

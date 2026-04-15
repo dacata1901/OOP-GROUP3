@@ -1,22 +1,36 @@
-#pragma once
-#include <vector>
-#include <string>
+#ifndef WORDMANAGER_H
+#define WORDMANAGER_H
+
 #include "GameComponent.h"
+#include <string>
+#include <vector>
+#include <set>
 
 using namespace std;
 
-// Class quản lý từ vựng
 class WordManager : public GameComponent {
 private:
-    vector<string> words; // lưu danh sách từ
+    vector<string> words;
+    set<int> usedIndexes;
+
+    bool isValidWord(const string& word) const;
+    string normalizeWord(const string& word) const;
 
 public:
-    // TODO: đọc file words.txt và lưu vào vector
-    void loadWords(string filename);
+    WordManager();
 
-    // TODO: trả về 1 từ random
+    bool loadWordsFromFile(const string& filename);
+    void displayWords() const;
+    bool isEmpty() const;
+    int getWordCount() const;
+    void clearWords();
+
     string getRandomWord();
+    string getUnusedRandomWord();
+    void resetUsedWords();
 
-    // override từ class cha
-    void info() override;
+    void displayInfo() const override;
+    string getComponentName() const override;
 };
+
+#endif
