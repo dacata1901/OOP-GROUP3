@@ -2,19 +2,33 @@
 #include <string>
 #include "GameComponent.h"
 
-using namespace std;
+// Enum độ khó
+enum Difficulty
+{
+    EASY = 1,
+    MEDIUM,
+    HARD
+};
 
-// Class xử lý độ khó
-class Level : public GameComponent {
+// Class Level kế thừa GameComponent
+class Level : public GameComponent
+{
 private:
-    int level; // 1: Easy, 2: Medium, 3: Hard
+    Difficulty level; // lưu độ khó hiện tại
 
 public:
-    // TODO: cho người dùng chọn level
+    // Constructor
+    Level();
+
+    // Cho người dùng chọn độ khó
     void chooseLevel();
 
-    // TODO: ẩn chữ theo level
-    string hideWord(string word);
+    // Tính số ký tự cần ẩn dựa vào độ dài từ
+    int getHiddenCount(int length);
 
+    // Ẩn chữ trong từ
+    std::string hideWord(const std::string& word);
+
+    // Override từ GameComponent
     void info() override;
 };
