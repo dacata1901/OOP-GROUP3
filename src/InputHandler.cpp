@@ -1,16 +1,23 @@
 #include "InputHandler.h"
 #include <iostream>
+#include <algorithm>
 
-// TODO: nhập từ bàn phím
+using namespace std;
+
 string InputHandler::getInput() {
-    return "";
+    string input;
+    cout << "Nhap dap an: ";
+    cin >> input;
+    return input;
 }
 
-// TODO: so sánh 2 chuỗi
 bool InputHandler::checkAnswer(string input, string correct) {
-    return false;
+    transform(input.begin(), input.end(), input.begin(), ::tolower);
+    transform(correct.begin(), correct.end(), correct.begin(), ::tolower);
+
+    return input == correct;
 }
 
 void InputHandler::info() {
-    // TODO: in "Input Handler"
+    cout << "Input Handler Component - Xu ly nhap va kiem tra dap an" << endl;
 }
