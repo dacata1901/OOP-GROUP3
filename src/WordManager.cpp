@@ -4,14 +4,15 @@
 #include <algorithm>
 #include <cctype>
 #include <cstdlib>
-#include <ctime>
 
 using namespace std;
 
+// Constructor
 WordManager::WordManager() {
-    srand((unsigned)time(nullptr));
+    // Không cần srand ở đây
 }
 
+// Kiểm tra từ hợp lệ (chỉ chứa chữ cái)
 bool WordManager::isValidWord(const string& word) const {
     if (word.empty()) return false;
 
@@ -23,18 +24,22 @@ bool WordManager::isValidWord(const string& word) const {
     return true;
 }
 
+// Chuẩn hóa từ (xóa khoảng trắng + lowercase)
 string WordManager::normalizeWord(const string& word) const {
     string result = word;
 
+    // Xóa khoảng trắng
     result.erase(remove_if(result.begin(), result.end(), ::isspace), result.end());
 
+    // Chuyển về chữ thường
     transform(result.begin(), result.end(), result.begin(),
               [](unsigned char c) { return tolower(c); });
 
     return result;
 }
 
-bool WordManager::loadWordsFromFile(const string& filename) {
+// Load từ từ file
+bool WordManager::loadWords(const string& filename) {
     ifstream file(filename);
 
     if (!file.is_open()) {
@@ -63,39 +68,33 @@ bool WordManager::loadWordsFromFile(const string& filename) {
     return true;
 }
 
-void WordManager::displayWords() const {
-    cout << "\nDanh sach tu vung:\n";
-    for (size_t i = 0; i < words.size(); i++) {
-        cout << i + 1 << ". " << words[i] << endl;
-    }
-}
-
+// Kiểm tra rỗng
 bool WordManager::isEmpty() const {
     return words.empty();
 }
 
+// Số lượng từ
 int WordManager::getWordCount() const {
     return static_cast<int>(words.size());
 }
 
+// Xóa dữ liệu
 void WordManager::clearWords() {
     words.clear();
     usedIndexes.clear();
 }
 
+// Lấy từ random
 string WordManager::getRandomWord() {
-    if (words.empty()) {
-        return "";
-    }
+    if (words.empty()) return "";
 
     int index = rand() % words.size();
     return words[index];
 }
 
+// Lấy từ chưa dùng
 string WordManager::getUnusedRandomWord() {
-    if (words.empty()) {
-        return "";
-    }
+    if (words.empty()) return "";
 
     if (usedIndexes.size() == words.size()) {
         return "";
@@ -104,20 +103,18 @@ string WordManager::getUnusedRandomWord() {
     int index;
     do {
         index = rand() % words.size();
-    } while (usedIndexes.count(index) > 0);
+    } while (usedIndexes.count(index));
 
     usedIndexes.insert(index);
     return words[index];
 }
 
+// Reset
 void WordManager::resetUsedWords() {
     usedIndexes.clear();
 }
 
-void WordManager::displayInfo() const {
-    cout << "WordManager dang quan ly " << words.size() << " tu." << endl;
-}
-
-string WordManager::getComponentName() const {
-    return "WordManager";
+// Thông tin (đa hình)
+void WordManager::info() {
+    cout << "WordManager: Dang quan ly " << words.size() << " tu.\n";
 }

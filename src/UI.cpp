@@ -1,6 +1,8 @@
-#include <UI.h>
+#include "UI.h"
 #include <iostream>
 #include <algorithm>
+#include <cctype>
+
 using namespace std;
 
 // ===== CONSTRUCTOR =====
@@ -33,6 +35,19 @@ void UI::displayWord(const string& word) {
     cout << endl;
 }
 
+// ===== INPUT =====
+char UI::getInput() {
+    char c;
+    cout << "Enter a letter: ";
+    cin >> c;
+    return tolower(c);
+}
+
+// ===== RESULT =====
+void UI::showResult(bool correct) {
+    cout << (correct ? "Correct!\n" : "Wrong!\n");
+}
+
 // ===== SCORE =====
 void UI::showScore() const {
     cout << "Score: " << score << endl;
@@ -52,32 +67,15 @@ void UI::showUsedLetters() const {
     cout << endl;
 }
 
-// ===== INPUT =====
-char UI::getInput() {
-    char c;
-    cout << "Enter a letter: ";
-    cin >> c;
-    return tolower(c);
-}
-
-// ===== RESULT =====
-void UI::showResult(bool correct) {
-    if (correct) {
-        cout << "[✔] Correct!\n";
-    } else {
-        cout << "[✘] Wrong!\n";
-    }
-}
-
 // ===== GAME OVER =====
 void UI::showGameOver(const string& word) {
-    cout << "\n💀 GAME OVER 💀\n";
+    cout << "\n===== GAME OVER =====\n";
     cout << "Correct word: " << word << endl;
 }
 
 // ===== WIN =====
 void UI::showWin(const string& word) {
-    cout << "\n🎉 YOU WIN 🎉\n";
+    cout << "\n===== YOU WIN =====\n";
     cout << "Word: " << word << endl;
 }
 
@@ -107,5 +105,5 @@ int UI::getLives() const {
 
 // ===== INFO =====
 void UI::info() {
-    cout << "UI Component: Display + User Interaction (OOP)\n";
+    cout << "UI Component: Display & Interaction\n";
 }
