@@ -2,22 +2,22 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <cctype>
 
 using namespace std;
 
 // Constructor
 Game::Game() {
-    // Khởi tạo random (chỉ gọi 1 lần duy nhất trong toàn chương trình)
     srand(time(0));
 }
 
-// Hàm chạy game chính
+// ===== GAME LOOP =====
 void Game::run() {
-    // Load danh sách từ từ file
-   wordManager.loadWords("data/words.txt");
+
+    wordManager.loadWords("data/words.txt");
 
     while (true) {
-        // ===== MENU =====
+
         ui.showMenu();
         int choice = ui.getChoice();
 
@@ -26,32 +26,35 @@ void Game::run() {
             break;
         }
 
-        // ===== GAME LOOP =====
         string word = wordManager.getRandomWord();
 
-        // Chọn độ khó
-        level.chooseLevel();
+        // lowercase
+        for (char &c : word) c = tolower(c);
 
-        // Ẩn chữ
+        level.chooseLevel();
         string hiddenWord = level.hideWord(word);
 
-        // Reset trạng thái mỗi vòng
-        // (nếu bạn có reset lives/usedLetters thì thêm ở UI)
+        ui.reset(); //reset mỗi game
 
         while (true) {
+
             cout << "\n====================\n";
 
-            // Hiển thị thông tin
             ui.displayWord(hiddenWord);
             ui.showScore();
             ui.showLives();
             ui.showUsedLetters();
 
-            // Nhập ký tự
             char input = ui.getInput();
+
+            //  nhập lại chữ đã dùng
+            if (ui.isUsedLetter(input)) {
+                cout << "Da nhap chu nay roi!\n";
+                continue;
+            }
+
             ui.addUsedLetter(input);
 
-            // Kiểm tra đúng sai
             bool correct = false;
 
             for (int i = 0; i < word.length(); i++) {
@@ -61,35 +64,28 @@ void Game::run() {
                 }
             }
 
-            // Hiển thị kết quả
             ui.showResult(correct);
 
-            if (correct) {
-                ui.increaseScore(10);
-            } else {
-                ui.decreaseLives();
-            }
+            if (correct) ui.increaseScore(10);
+            else ui.decreaseLives();
 
-            // ===== WIN =====
             if (hiddenWord == word) {
                 ui.showWin(word);
                 break;
             }
 
-            // ===== GAME OVER =====
             if (ui.getLives() <= 0) {
                 ui.showGameOver(word);
                 break;
             }
         }
 
-        // ===== CONTINUE? =====
         char cont;
-        cout << "\nBan co muon choi tiep? (y/n): ";
+        cout << "\nChoi tiep? (y/n): ";
         cin >> cont;
 
         if (cont != 'y' && cont != 'Y') {
-            cout << "Cam on ban da choi!\n";
+            cout << "Cam on ban!\n";
             break;
         }
     }

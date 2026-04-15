@@ -11,6 +11,13 @@ UI::UI() {
     lives = 5;
 }
 
+// ===== RESET =====
+void UI::reset() {
+    score = 0;
+    lives = 5;
+    usedLetters.clear();
+}
+
 // ===== MENU =====
 void UI::showMenu() {
     cout << "\n========== WORD GUESS GAME ==========\n";
@@ -26,21 +33,35 @@ int UI::getChoice() {
     return choice;
 }
 
-// ===== HIỂN THỊ WORD =====
+// ===== DISPLAY WORD =====
 void UI::displayWord(const string& word) {
     cout << "\nWord: ";
-    for (char c : word) {
-        cout << c << " ";
-    }
+    for (char c : word) cout << c << " ";
     cout << endl;
 }
 
-// ===== INPUT =====
+// ===== INPUT (CHỈ 1 CHỮ CÁI) =====
 char UI::getInput() {
-    char c;
-    cout << "Enter a letter: ";
-    cin >> c;
-    return tolower(c);
+    string input;
+
+    while (true) {
+        cout << "Enter 1 letter: ";
+        cin >> input;
+
+        if (input.length() != 1) {
+            cout << "Chi duoc nhap 1 chu cai!\n";
+            continue;
+        }
+
+        char c = tolower(input[0]);
+
+        if (!isalpha(c)) {
+            cout << "Chi duoc nhap chu cai a-z!\n";
+            continue;
+        }
+
+        return c;
+    }
 }
 
 // ===== RESULT =====
@@ -61,9 +82,7 @@ void UI::showLives() const {
 // ===== USED LETTERS =====
 void UI::showUsedLetters() const {
     cout << "Used letters: ";
-    for (char c : usedLetters) {
-        cout << c << " ";
-    }
+    for (char c : usedLetters) cout << c << " ";
     cout << endl;
 }
 
@@ -81,9 +100,13 @@ void UI::showWin(const string& word) {
 
 // ===== LOGIC =====
 void UI::addUsedLetter(char c) {
-    if (find(usedLetters.begin(), usedLetters.end(), c) == usedLetters.end()) {
+    if (!isUsedLetter(c)) {
         usedLetters.push_back(c);
     }
+}
+
+bool UI::isUsedLetter(char c) {
+    return find(usedLetters.begin(), usedLetters.end(), c) != usedLetters.end();
 }
 
 void UI::increaseScore(int value) {
@@ -95,15 +118,14 @@ void UI::decreaseLives() {
 }
 
 // ===== GETTER =====
-int UI::getScore() const {
-    return score;
-}
-
 int UI::getLives() const {
     return lives;
 }
 
-// ===== INFO =====
+int UI::getScore() const {
+    return score;
+}
+
 void UI::info() {
-    cout << "UI Component: Display & Interaction\n";
+    cout << "UI Component\n";
 }

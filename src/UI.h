@@ -1,53 +1,45 @@
 #pragma once
-#include <string>
+#include <iostream>
 #include <vector>
-#include "GameComponent.h"
+#include <string>
 
-// Class UI kế thừa từ GameComponent
-// Chịu trách nhiệm hiển thị và tương tác với người dùng
-class UI : public GameComponent {
+using namespace std;
+
+class UI {
 private:
-    int score;                  // điểm
-    int lives;                  // số mạng
-    std::vector<char> usedLetters; // các chữ đã nhập
+    int score;
+    int lives;
+    vector<char> usedLetters;
 
 public:
-    // ===== CONSTRUCTOR =====
     UI();
 
-    // ===== MENU =====
     void showMenu();
     int getChoice();
 
-    // ===== HIỂN THỊ WORD =====
-    void displayWord(const std::string& word);
+    void displayWord(const string& word);
 
-    // ===== INPUT =====
-    char getInput();
+    char getInput(); // 🔥 chỉ 1 chữ cái
 
-    // ===== RESULT =====
     void showResult(bool correct);
 
-    // ===== SCORE & LIVES =====
     void showScore() const;
     void showLives() const;
-
-    // ===== USED LETTERS =====
     void showUsedLetters() const;
 
-    // ===== GAME STATE =====
-    void showGameOver(const std::string& word);
-    void showWin(const std::string& word);
+    void showGameOver(const string& word);
+    void showWin(const string& word);
 
-    // ===== LOGIC =====
     void addUsedLetter(char c);
+    bool isUsedLetter(char c);
+
     void increaseScore(int value);
     void decreaseLives();
 
-    // ===== GETTER =====
-    int getScore() const;
-    int getLives() const;
+    void reset();
 
-    // ===== ĐA HÌNH =====
-    void info() override;
+    int getLives() const;
+    int getScore() const;
+
+    void info();
 };
