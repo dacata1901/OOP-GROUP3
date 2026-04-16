@@ -37,7 +37,7 @@ string WordManager::normalizeWord(const string& word) const {
 bool WordManager::loadWords(const string& filename) {
     ifstream file(filename);
     if (!file.is_open()) {
-        cout << "Khong the mo file: " << filename << endl;
+        cout << "Cannot open file: " << filename << endl;
         return false;
     }
 
@@ -55,7 +55,7 @@ bool WordManager::loadWords(const string& filename) {
     file.close();
 
     if (words.empty()) {
-        cout << "File khong co tu hop le." << endl;
+        cout << "No valid words found in file." << endl;
         return false;
     }
     return true;
@@ -97,13 +97,13 @@ void WordManager::resetUsedWords() {
 //  POLYMORPHISM: Override info() và display()
 
 void WordManager::info() const {
-    cout << "WordManager: Dang quan ly " << words.size() << " tu." << endl;
+    cout << "WordManager: Managing " << words.size() << " words." << endl;
 }
 
 void WordManager::display() const {
     cout << "=== " << componentName << " ===" << endl;
-    cout << "Tong so tu: " << words.size() << endl;
-    cout << "Da su dung:  " << usedIndexes.size() << " tu" << endl;
+    cout << "Total words: " << words.size() << endl;
+    cout << "Used so far: " << usedIndexes.size() << " words" << endl;
 }
 
 

@@ -5,34 +5,34 @@
 
 using namespace std;
 
-// ============================================================
+
 //  Constructor - INHERITANCE: gọi constructor lớp cha
-// ============================================================
+
 Level::Level() : GameComponent("Level"), difficulty(EASY), hiddenRatio(0.3f) {}
 
-// ============================================================
+
 //  ENCAPSULATION: private helper - cập nhật tỉ lệ ẩn
-// ============================================================
+
 void Level::updateRatio() {
     if (difficulty == EASY)        hiddenRatio = 0.3f;
     else if (difficulty == MEDIUM) hiddenRatio = 0.5f;
     else                           hiddenRatio = 0.7f;
 }
 
-// ============================================================
+
 //  Public methods
-// ============================================================
+
 void Level::chooseLevel() {
     int choice;
-    cout << "\nChon do kho:\n";
-    cout << "  1. Easy   (an 30% chu)\n";
-    cout << "  2. Medium (an 50% chu)\n";
-    cout << "  3. Hard   (an 70% chu)\n";
-    cout << "Nhap: ";
+    cout << "\nChoose difficulty:\n";
+    cout << "  1. Easy   (hide 30% of letters)\n";
+    cout << "  2. Medium (hide 50% of letters)\n";
+    cout << "  3. Hard   (hide 70% of letters)\n";
+    cout << "Enter: ";
     cin >> choice;
 
     while (choice < 1 || choice > 3) {
-        cout << "Vui long nhap lai (1-3): ";
+        cout << "Please enter a valid option (1-3): ";
         cin >> choice;
     }
 
@@ -69,14 +69,14 @@ string Level::hideWord(const string& word) const {
 //  POLYMORPHISM: Override info() và display()
 
 void Level::info() const {
-    cout << "Level Component - Do kho hien tai: " << getDifficultyName()
-         << " (an " << static_cast<int>(hiddenRatio * 100) << "% chu)" << endl;
+    cout << "Level Component - Current difficulty: " << getDifficultyName()
+         << " (hiding " << static_cast<int>(hiddenRatio * 100) << "% of letters)" << endl;
 }
 
 void Level::display() const {
     cout << "=== " << componentName << " ===" << endl;
-    cout << "Do kho: " << getDifficultyName() << endl;
-    cout << "Ti le an: " << static_cast<int>(hiddenRatio * 100) << "%" << endl;
+    cout << "Difficulty: " << getDifficultyName() << endl;
+    cout << "Hidden ratio: " << static_cast<int>(hiddenRatio * 100) << "%" << endl;
 }
 
 

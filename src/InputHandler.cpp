@@ -15,7 +15,7 @@ InputHandler::InputHandler()
 //  Lấy input 1 ký tự hợp lệ
 char InputHandler::getChar() {
     string input;
-    cout << "Nhap 1 chu cai: ";
+    cout << "Enter 1 letter: ";
     getline(cin >> ws, input);
 
     // Xóa khoảng trắng
@@ -39,9 +39,9 @@ char InputHandler::getChar() {
     return c;
 }
 
-// ============================================================
+
 //  Kiểm tra đáp án
-// ============================================================
+
 bool InputHandler::checkAnswer(const string& input, const string& correct) const {
     string a = input, b = correct;
     transform(a.begin(), a.end(), a.begin(), ::tolower);
@@ -51,7 +51,7 @@ bool InputHandler::checkAnswer(const string& input, const string& correct) const
 
 // ============================================================
 //  POLYMORPHISM: Override info() và display()
-// ============================================================
+
 void InputHandler::info() const {
     cout << "InputHandler: lastInput='" << lastInput
          << "', errors=" << errorCount << endl;
@@ -59,8 +59,8 @@ void InputHandler::info() const {
 
 void InputHandler::display() const {
     cout << "=== " << componentName << " ===" << endl;
-    cout << "Input cuoi: '" << lastInput << "'" << endl;
-    cout << "So loi:     " << errorCount << endl;
+    cout << "Last input: '" << lastInput << "'" << endl;
+    cout << "Error count: " << errorCount << endl;
 }
 
 // ============================================================

@@ -15,7 +15,7 @@ Game::Game() {
 bool Game::playRound() {
     string word = wordManager.getRandomWord();
     if (word.empty()) {
-        cout << "Khong co tu nao de choi!\n";
+        cout << "No words available to play!\n";
         return false;
     }
 
@@ -24,7 +24,7 @@ bool Game::playRound() {
 
     level.chooseLevel();
 
-    cout << "Do kho da chon: " << level << endl;
+    cout << "Selected difficulty: " << level << endl;
 
     string hiddenWord = level.hideWord(word);
     ui.reset();
@@ -39,11 +39,11 @@ bool Game::playRound() {
         char input = ui.getInput();
 
         if (input == '!') {
-            cout << "Chi duoc nhap 1 chu cai hop le!\n";
+            cout << "Please enter exactly 1 valid letter!\n";
             --ui;
         } else {
             if (ui.isUsedLetter(input)) {
-                cout << "Chu nay da duoc dung roi!\n";
+                cout << "You already used that letter!\n";
                 continue;
             }
 
@@ -82,29 +82,25 @@ bool Game::playRound() {
 void Game::run() {
     wordManager.loadWords("data/words.txt");
 
-    // Demo operator << (inheritance)
-    const GameComponent& gcRef = wordManager;
-    cout << gcRef << endl;
-
     while (true) {
         ui.showMenu();
         int choice = ui.getChoice();
 
         if (choice == 2) {
-            cout << "Cam on ban da choi! Tam biet!\n";
-            cout << "Ket qua cuoi: " << ui << endl;
+            cout << "Thanks for playing! Goodbye!\n";
+            cout << "Final result: " << ui << endl;
             break;
         }
 
         bool won = playRound();
 
         if (!won) {
-            cout << "\nBan co muon choi lai khong? (1=Co / 2=Khong): ";
+            cout << "\nDo you want to play again? (1=Yes / 2=No): ";
             int replay;
             cin >> replay;
 
             if (replay != 1) {
-                cout << "Ket qua: " << ui << endl;
+                cout << "Result: " << ui << endl;
                 break;
             }
 

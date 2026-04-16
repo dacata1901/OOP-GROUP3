@@ -37,12 +37,12 @@ void UI::showMenu() const {
 int UI::getChoice() {
     int choice;
     while (true) {
-        cout << "Chon: ";
+        cout << "Choose: ";
         cin >> choice;
         if (cin.fail()) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Vui long nhap so!\n";
+            cout << "Please enter a number!\n";
             continue;
         }
         return choice;
@@ -57,30 +57,30 @@ void UI::showSeparator() const {
 }
 
 void UI::displayWord(const string& word) const {
-    cout << "Tu: ";
+    cout << "Word: ";
     for (char c : word) cout << c << " ";
     cout << endl;
 }
 
 void UI::showResult(bool correct) const {
-    cout << (correct ? ">>> Dung! <<<\n" : ">>> Sai! <<<\n");
+    cout << (correct ? ">>> Correct! <<<\n" : ">>> Wrong! <<<\n");
 }
 
 void UI::showScore() const {
-    cout << "Diem:  " << score << endl;
+    cout << "Score: " << score << endl;
 }
 
 void UI::showLives() const {
-    cout << "Mang: " << lives << "  [";
+    cout << "Lives: " << lives << "  [";
     for (int i = 0; i < lives; i++) cout << "*";
     for (int i = lives; i < DEFAULT_LIVES; i++) cout << ".";
     cout << "]" << endl;
 }
 
 void UI::showUsedLetters() const {
-    cout << "Da dung: ";
+    cout << "Used: ";
     if (usedLetters.empty()) {
-        cout << "(chua co)";
+        cout << "(none)";
     } else {
         for (char c : usedLetters) cout << c << " ";
     }
@@ -89,15 +89,15 @@ void UI::showUsedLetters() const {
 
 void UI::showGameOver(const string& word) const {
     cout << "\n===== GAME OVER =====\n";
-    cout << "Tu dung: " << word << endl;
-    cout << "Diem cuoi: " << score << endl;
+    cout << "The word was: " << word << endl;
+    cout << "Final score: " << score << endl;
     cout << "=====================\n";
 }
 
 void UI::showWin(const string& word) const {
     cout << "\n===== YOU WIN! =====\n";
-    cout << "Tu: " << word << endl;
-    cout << "Diem: " << score << endl;
+    cout << "Word: " << word << endl;
+    cout << "Score: " << score << endl;
     cout << "====================\n";
 }
 
@@ -106,7 +106,7 @@ void UI::showWin(const string& word) const {
 // ============================================================
 char UI::getInput() {
     string input;
-    cout << "Nhap 1 chu cai: ";
+    cout << "Enter 1 letter: ";
     getline(cin >> ws, input);
     input.erase(remove_if(input.begin(), input.end(), ::isspace), input.end());
 
@@ -153,8 +153,8 @@ void UI::info() const {
 
 void UI::display() const {
     cout << "=== " << componentName << " ===" << endl;
-    cout << "Diem: " << score << " | Mang: " << lives << endl;
-    cout << "So chu da dung: " << usedLetters.size() << endl;
+    cout << "Score: " << score << " | Lives: " << lives << endl;
+    cout << "Letters used: " << usedLetters.size() << endl;
 }
 
 // ============================================================
