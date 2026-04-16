@@ -4,43 +4,41 @@
 #include <vector>
 #include <set>
 
-// Class quản lý từ vựng
+// ============================================================
+//  INHERITANCE: WordManager kế thừa từ GameComponent
+//  ENCAPSULATION: words, usedIndexes là private
+// ============================================================
 class WordManager : public GameComponent {
 private:
-    std::vector<std::string> words;   // danh sách từ
-    std::set<int> usedIndexes;        // tránh lặp lại từ
+    std::vector<std::string> words;
+    std::set<int> usedIndexes;
 
-    // Kiểm tra từ hợp lệ
     bool isValidWord(const std::string& word) const;
-
-    // Chuẩn hóa từ (lowercase, trim...)
     std::string normalizeWord(const std::string& word) const;
 
 public:
-    // Constructor
     WordManager();
 
-    // Load từ từ file
     bool loadWords(const std::string& filename);
-
-    // Kiểm tra rỗng
     bool isEmpty() const;
-
-    // Lấy số lượng từ
     int getWordCount() const;
-
-    // Xóa toàn bộ từ
     void clearWords();
-
-    // Lấy từ ngẫu nhiên
     std::string getRandomWord();
-
-    // Lấy từ chưa dùng
     std::string getUnusedRandomWord();
-
-    // Reset danh sách đã dùng
     void resetUsedWords();
 
-    // Override từ GameComponent
-    void info() override;
+    // POLYMORPHISM: override info() từ GameComponent
+    void info() const override;
+
+    // POLYMORPHISM: override display() từ GameComponent
+    void display() const override;
+
+    // OPERATOR OVERLOADING: [] để lấy từ theo chỉ số
+    std::string operator[](int index) const;
+
+    // OPERATOR OVERLOADING: += thêm một từ vào danh sách
+    WordManager& operator+=(const std::string& word);
+
+    // OPERATOR OVERLOADING: == so sánh số lượng từ hai WordManager
+    bool operator==(const WordManager& other) const;
 };

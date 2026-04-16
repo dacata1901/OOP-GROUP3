@@ -1,45 +1,83 @@
 #pragma once
-#include <iostream>
-#include <vector>
+#include "GameComponent.h"
 #include <string>
+#include <vector>
+#include <limits>
 
-using namespace std;
-
-class UI {
+// ============================================================
+//  INHERITANCE: UI kế thừa từ GameComponent
+//  ENCAPSULATION: score, lives, usedLetters là private
+// ============================================================
+class UI : public GameComponent {
 private:
-    int score;
-    int lives;
-    vector<char> usedLetters;
+    int score;                      // Điểm số (private)
+    int lives;                      // Số mạng (private)
+    std::vector<char> usedLetters;  // Các chữ đã dùng (private)
+
+    static const int DEFAULT_LIVES = 5;  // Hằng số mặc định
 
 public:
     UI();
 
-    void showMenu();
-    int getChoice();
+    // Reset trạng thái cho ván mới
+    void reset();
+    void fullReset();  // reset cả score và lives
 
-    void displayWord(const string& word);
+    // Menu
+    void showMenu() const;
+    int  getChoice();
 
-    char getInput();
-
-    void showResult(bool correct);
-
+    // Hiển thị game
+    void displayWord(const std::string& word) const;
+    void showResult(bool correct) const;
     void showScore() const;
     void showLives() const;
     void showUsedLetters() const;
+    void showGameOver(const std::string& word) const;
+    void showWin(const std::string& word) const;
+    void showSeparator() const;
 
-    void showGameOver(const string& word);
-    void showWin(const string& word);
+    // Input
+    char getInput();
 
+    // Logic chữ đã dùng
     void addUsedLetter(char c);
-    bool isUsedLetter(char c);
+    bool isUsedLetter(char c) const;
 
+    // Thao tác điểm/mạng
     void increaseScore(int value);
     void decreaseLives();
 
-    void reset();
+    // Getters - ENCAPSULATION
+    int getLives() const  { return lives; }
+    int getScore() const  { return score; }
 
-    int getLives() const;
-    int getScore() const;
+    // Setters - ENCAPSULATION
+    void setLives(int l)  { lives = l; }
+    void setScore(int s)  { score = s; }
 
-    void info();
+    // POLYMORPHISM: override từ GameComponent
+    void info() const override;
+    void display() const override;
+
+    // OPERATOR OVERLOADING: + cộng thêm điểm, trả UI mới
+    UI operator+(int points) const;
+
+    // OPERATOR OVERLOADING: += cộng điểm trực tiếp
+    UI& operator+=(int points);
+
+    // OPERATOR OVERLOADING: -- giảm 1 mạng (prefix)
+    UI& operator--();
+
+    // OPERATOR OVERLOADING: ++ tăng 1 mạng (prefix)  
+    UI& operator++();
+
+    // OPERATOR OVERLOADING: == so sánh hai UI có cùng điểm không
+    bool operator==(const UI& other) const;
+
+    // OPERATOR OVERLOADING: > so sánh điểm
+    bool operator>(const UI& other) const;
+
+    // OPERATOR OVERLOADING: << in trạng thái UI
+    friend std::ostream& operator<<(std::ostream& os, const UI& ui);
 };

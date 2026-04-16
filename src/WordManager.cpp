@@ -7,41 +7,35 @@
 
 using namespace std;
 
-// Constructor
-WordManager::WordManager() {
-    // Không cần srand ở đây
-}
+// ============================================================
+//  Constructor - INHERITANCE: gọi constructor lớp cha
+// ============================================================
+WordManager::WordManager() : GameComponent("WordManager") {}
 
-// Kiểm tra từ hợp lệ (chỉ chứa chữ cái)
+// ============================================================
+//  ENCAPSULATION: private helper methods
+// ============================================================
 bool WordManager::isValidWord(const string& word) const {
     if (word.empty()) return false;
-
     for (char c : word) {
-        if (!isalpha(static_cast<unsigned char>(c))) {
-            return false;
-        }
+        if (!isalpha(static_cast<unsigned char>(c))) return false;
     }
     return true;
 }
 
-// Chuẩn hóa từ (xóa khoảng trắng + lowercase)
 string WordManager::normalizeWord(const string& word) const {
     string result = word;
-
-    // Xóa khoảng trắng
     result.erase(remove_if(result.begin(), result.end(), ::isspace), result.end());
-
-    // Chuyển về chữ thường
     transform(result.begin(), result.end(), result.begin(),
               [](unsigned char c) { return tolower(c); });
-
     return result;
 }
 
-// Load từ từ file
+// ============================================================
+//  Public methods
+// ============================================================
 bool WordManager::loadWords(const string& filename) {
     ifstream file(filename);
-
     if (!file.is_open()) {
         cout << "Khong the mo file: " << filename << endl;
         return false;
@@ -64,57 +58,74 @@ bool WordManager::loadWords(const string& filename) {
         cout << "File khong co tu hop le." << endl;
         return false;
     }
-
     return true;
 }
 
-// Kiểm tra rỗng
 bool WordManager::isEmpty() const {
     return words.empty();
 }
 
-// Số lượng từ
 int WordManager::getWordCount() const {
     return static_cast<int>(words.size());
 }
 
-// Xóa dữ liệu
 void WordManager::clearWords() {
     words.clear();
     usedIndexes.clear();
 }
 
-// Lấy từ random
 string WordManager::getRandomWord() {
     if (words.empty()) return "";
-
-    int index = rand() % words.size();
-    return words[index];
+    return words[rand() % words.size()];
 }
 
-// Lấy từ chưa dùng
 string WordManager::getUnusedRandomWord() {
-    if (words.empty()) return "";
-
-    if (usedIndexes.size() == words.size()) {
-        return "";
-    }
-
+    if (words.empty() || usedIndexes.size() == words.size()) return "";
     int index;
     do {
         index = rand() % words.size();
     } while (usedIndexes.count(index));
-
     usedIndexes.insert(index);
     return words[index];
 }
 
-// Reset
 void WordManager::resetUsedWords() {
     usedIndexes.clear();
 }
 
-// Thông tin (đa hình)
-void WordManager::info() {
-    cout << "WordManager: Dang quan ly " << words.size() << " tu.\n";
+// ============================================================
+//  POLYMORPHISM: Override info() và display()
+// ============================================================
+void WordManager::info() const {
+    cout << "WordManager: Dang quan ly " << words.size() << " tu." << endl;
+}
+
+void WordManager::display() const {
+    cout << "=== " << componentName << " ===" << endl;
+    cout << "Tong so tu: " << words.size() << endl;
+    cout << "Da su dung:  " << usedIndexes.size() << " tu" << endl;
+}
+
+// ============================================================
+//  OPERATOR OVERLOADING
+// ============================================================
+
+// [] - truy cập từ theo chỉ số
+string WordManager::operator[](int index) const {
+    if (index < 0 || index >= (int)words.size()) return "";
+    return words[index];
+}
+
+// += - thêm một từ vào danh sách
+WordManager& WordManager::operator+=(const string& word) {
+    string normalized = normalizeWord(word);
+    if (isValidWord(normalized)) {
+        words.push_back(normalized);
+    }
+    return *this;
+}
+
+// == - so sánh hai WordManager có cùng số lượng từ không
+bool WordManager::operator==(const WordManager& other) const {
+    return words.size() == other.words.size();
 }

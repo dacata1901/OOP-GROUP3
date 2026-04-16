@@ -1,17 +1,36 @@
 #pragma once
 #include <iostream>
+#include <string>
 
-// Lớp cha dùng chung cho các thành phần trong game
-// Các class như WordManager, Level, InputHandler, UI sẽ kế thừa từ đây
+// ============================================================
+//  ABSTRACTION: Lớp trừu tượng - không thể khởi tạo trực tiếp
+//  Định nghĩa giao diện chung cho tất cả thành phần game
+// ============================================================
 class GameComponent {
-public:
+protected:
+    std::string componentName;  // Tên thành phần (dùng chung)
 
-    // Hàm ảo dùng để thể hiện đa hình
-    // Mỗi class con sẽ ghi đè (override) hàm này
-    virtual void info() {
-        std::cout << "Game Component" << std::endl;
+public:
+    GameComponent(const std::string& name = "GameComponent")
+        : componentName(name) {}
+
+    // ABSTRACTION: Pure virtual - các class con BẮT BUỘC phải override
+    virtual void info() const = 0;
+
+    // Virtual display - có thể override để hiển thị khác nhau (Polymorphism)
+    virtual void display() const {
+        std::cout << "[" << componentName << "]" << std::endl;
     }
 
-    // Destructor ảo để đảm bảo giải phóng bộ nhớ đúng khi dùng con trỏ
+    // Getter cho componentName (Encapsulation)
+    std::string getName() const { return componentName; }
+
+    // OPERATOR OVERLOADING: << để in thông tin component ra ostream
+    friend std::ostream& operator<<(std::ostream& os, const GameComponent& gc) {
+        os << "[Component: " << gc.componentName << "]";
+        return os;
+    }
+
+    // Virtual destructor đảm bảo giải phóng bộ nhớ đúng
     virtual ~GameComponent() {}
 };

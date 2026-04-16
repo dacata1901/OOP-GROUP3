@@ -1,24 +1,25 @@
 #pragma once
-
-// Include các class sẽ sử dụng
 #include "WordManager.h"
 #include "Level.h"
 #include "InputHandler.h"
 #include "UI.h"
 
-// Class điều khiển toàn bộ game
-// Đây là nơi kết nối tất cả các thành phần lại với nhau
+// ============================================================
+//  Game: class điều phối toàn bộ - KHÔNG kế thừa GameComponent
+//  vì Game là controller, không phải một "thành phần" game
+// ============================================================
 class Game {
 private:
-    WordManager wordManager;   // quản lý từ vựng
-    Level level;               // xử lý độ khó
-    InputHandler inputHandler; // xử lý input
-    UI ui;                     // giao diện
+    WordManager  wordManager;
+    Level        level;
+    InputHandler inputHandler;
+    UI           ui;
+
+    // ENCAPSULATION: private helper methods
+    bool playRound();       // Chơi 1 ván
+    void showAllInfo() const;  // Demo polymorphism - gọi info() trên tất cả
 
 public:
-    // Constructor
     Game();
-
-    // Hàm chạy game chính
     void run();
 };
