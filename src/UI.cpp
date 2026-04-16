@@ -36,7 +36,7 @@ int UI::getChoice() {
         if (cin.fail()) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Nhap so hop le!\n";
+            cout << "Please enter a valid number!\n";
             continue;
         }
 
