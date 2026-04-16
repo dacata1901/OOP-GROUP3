@@ -14,17 +14,15 @@ Level::Level() {
 // Chọn độ khó
 void Level::chooseLevel() {
     int choice;
+cout << "Choose difficulty:\n";
+cout << "1. Easy\n2. Medium\n3. Hard\n";
+cout << "Enter: ";
+cin >> choice;
 
-    cout << "Chon do kho:\n";
-    cout << "1. Easy\n2. Medium\n3. Hard\n";
-    cout << "Nhap: ";
+while (choice < 1 || choice > 3) {
+    cout << "Please enter again (1-3): ";
     cin >> choice;
-
-    while (choice < 1 || choice > 3) {
-        cout << "Nhap lai (1-3): ";
-        cin >> choice;
-    }
-
+}
     level = static_cast<Difficulty>(choice);
 }
 
