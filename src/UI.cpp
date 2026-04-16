@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include <cctype>
+#include <limits>
 
 using namespace std;
 
@@ -13,8 +14,6 @@ UI::UI() {
 
 // ===== RESET =====
 void UI::reset() {
-    score = 0;
-    lives = 5;
     usedLetters.clear();
 }
 
@@ -26,11 +25,23 @@ void UI::showMenu() {
     cout << "====================================\n";
 }
 
+// ===== CHOICE =====
 int UI::getChoice() {
     int choice;
-    cout << "Choose: ";
-    cin >> choice;
-    return choice;
+
+    while (true) {
+        cout << "Choose: ";
+        cin >> choice;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Nhap so hop le!\n";
+            continue;
+        }
+
+        return choice;
+    }
 }
 
 // ===== DISPLAY WORD =====
@@ -40,28 +51,26 @@ void UI::displayWord(const string& word) {
     cout << endl;
 }
 
-// ===== INPUT (CHỈ 1 CHỮ CÁI) =====
+// ===== INPUT STRICT =====
 char UI::getInput() {
     string input;
 
-    while (true) {
-        cout << "Enter 1 letter: ";
-        cin >> input;
+    cout << "Enter 1 letter: ";
+    getline(cin >> ws, input);
 
-        if (input.length() != 1) {
-            cout << "Chi duoc nhap 1 chu cai!\n";
-            continue;
-        }
+    input.erase(remove_if(input.begin(), input.end(), ::isspace), input.end());
 
-        char c = tolower(input[0]);
-
-        if (!isalpha(c)) {
-            cout << "Chi duoc nhap chu cai a-z!\n";
-            continue;
-        }
-
-        return c;
+    if (input.length() != 1) {
+        return '!';
     }
+
+    char c = tolower(input[0]);
+
+    if (!isalpha(static_cast<unsigned char>(c))) {
+        return '!';
+    }
+
+    return c;
 }
 
 // ===== RESULT =====
@@ -82,7 +91,11 @@ void UI::showLives() const {
 // ===== USED LETTERS =====
 void UI::showUsedLetters() const {
     cout << "Used letters: ";
-    for (char c : usedLetters) cout << c << " ";
+
+    for (char c : usedLetters) {
+        cout << c << " ";
+    }
+
     cout << endl;
 }
 
@@ -100,7 +113,9 @@ void UI::showWin(const string& word) {
 
 // ===== LOGIC =====
 void UI::addUsedLetter(char c) {
-    if (!isUsedLetter(c)) {
+    c = tolower(c);
+
+    if (isalpha(static_cast<unsigned char>(c)) && !isUsedLetter(c)) {
         usedLetters.push_back(c);
     }
 }
@@ -117,7 +132,7 @@ void UI::decreaseLives() {
     lives--;
 }
 
-// ===== GETTER =====
+// ===== RESET STATE GETTERS =====
 int UI::getLives() const {
     return lives;
 }

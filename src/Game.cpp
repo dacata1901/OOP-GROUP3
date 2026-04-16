@@ -16,25 +16,26 @@ void Game::run() {
 
     wordManager.loadWords("data/words.txt");
 
+    bool gameOver = false;
+
     while (true) {
 
         ui.showMenu();
         int choice = ui.getChoice();
 
-        if (choice == 2) {
+        if (choice == 2 || gameOver) {
             cout << "Thoat game!\n";
             break;
         }
 
         string word = wordManager.getRandomWord();
 
-        // lowercase
         for (char &c : word) c = tolower(c);
 
         level.chooseLevel();
         string hiddenWord = level.hideWord(word);
 
-        ui.reset(); //reset mỗi game
+        ui.reset();
 
         while (true) {
 
@@ -47,46 +48,49 @@ void Game::run() {
 
             char input = ui.getInput();
 
-            //  nhập lại chữ đã dùng
-            if (ui.isUsedLetter(input)) {
-                cout << "Da nhap chu nay roi!\n";
-                continue;
+            //  input sai
+            if (input == '!') {
+                cout << "Only ONE valid letter is allowed!\n";
+                ui.decreaseLives();
             }
+            else {
 
-            ui.addUsedLetter(input);
-
-            bool correct = false;
-
-            for (int i = 0; i < word.length(); i++) {
-                if (word[i] == input && hiddenWord[i] == '_') {
-                    hiddenWord[i] = input;
-                    correct = true;
+                if (ui.isUsedLetter(input)) {
+                    cout << "This letter has already been used!\n";
+                    continue;
                 }
+
+                ui.addUsedLetter(input);
+
+                bool correct = false;
+
+                for (int i = 0; i < (int)word.length(); i++) {
+                    if (word[i] == input && hiddenWord[i] == '_') {
+                        hiddenWord[i] = input;
+                        correct = true;
+                    }
+                }
+
+                ui.showResult(correct);
+
+                if (correct) ui.increaseScore(10);
+                else ui.decreaseLives();
             }
 
-            ui.showResult(correct);
-
-            if (correct) ui.increaseScore(10);
-            else ui.decreaseLives();
-
+            // WIN
             if (hiddenWord == word) {
                 ui.showWin(word);
                 break;
             }
 
+            // GAME OVER → EXIT FULL GAME
             if (ui.getLives() <= 0) {
                 ui.showGameOver(word);
+                gameOver = true;
                 break;
             }
         }
 
-        char cont;
-        cout << "\nChoi tiep? (y/n): ";
-        cin >> cont;
-
-        if (cont != 'y' && cont != 'Y') {
-            cout << "Cam on ban!\n";
-            break;
-        }
+        if (gameOver) break;
     }
 }

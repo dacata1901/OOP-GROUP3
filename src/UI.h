@@ -19,7 +19,7 @@ public:
 
     void displayWord(const string& word);
 
-    char getInput(); // 🔥 chỉ 1 chữ cái
+    char getInput();
 
     void showResult(bool correct);
 
