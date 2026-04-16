@@ -2,19 +2,19 @@
 #include "GameComponent.h"
 #include <string>
 
-// ============================================================
+
 //  Enum độ khó
-// ============================================================
+
 enum Difficulty {
     EASY   = 1,
     MEDIUM = 2,
     HARD   = 3
 };
 
-// ============================================================
+
 //  INHERITANCE: Level kế thừa từ GameComponent
 //  ENCAPSULATION: difficulty, hiddenRatio là private
-// ============================================================
+
 class Level : public GameComponent {
 private:
     Difficulty difficulty;

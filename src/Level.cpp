@@ -65,9 +65,9 @@ string Level::hideWord(const string& word) const {
     return result;
 }
 
-// ============================================================
+
 //  POLYMORPHISM: Override info() và display()
-// ============================================================
+
 void Level::info() const {
     cout << "Level Component - Do kho hien tai: " << getDifficultyName()
          << " (an " << static_cast<int>(hiddenRatio * 100) << "% chu)" << endl;
@@ -79,9 +79,8 @@ void Level::display() const {
     cout << "Ti le an: " << static_cast<int>(hiddenRatio * 100) << "%" << endl;
 }
 
-// ============================================================
+
 //  OPERATOR OVERLOADING
-// ============================================================
 
 // < so sánh độ khó
 bool Level::operator<(const Level& other) const {

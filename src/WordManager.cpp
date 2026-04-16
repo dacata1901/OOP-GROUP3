@@ -7,14 +7,14 @@
 
 using namespace std;
 
-// ============================================================
+
 //  Constructor - INHERITANCE: gọi constructor lớp cha
-// ============================================================
+
 WordManager::WordManager() : GameComponent("WordManager") {}
 
-// ============================================================
+
 //  ENCAPSULATION: private helper methods
-// ============================================================
+
 bool WordManager::isValidWord(const string& word) const {
     if (word.empty()) return false;
     for (char c : word) {
@@ -31,9 +31,9 @@ string WordManager::normalizeWord(const string& word) const {
     return result;
 }
 
-// ============================================================
+
 //  Public methods
-// ============================================================
+
 bool WordManager::loadWords(const string& filename) {
     ifstream file(filename);
     if (!file.is_open()) {
@@ -93,9 +93,9 @@ void WordManager::resetUsedWords() {
     usedIndexes.clear();
 }
 
-// ============================================================
+
 //  POLYMORPHISM: Override info() và display()
-// ============================================================
+
 void WordManager::info() const {
     cout << "WordManager: Dang quan ly " << words.size() << " tu." << endl;
 }
@@ -106,9 +106,9 @@ void WordManager::display() const {
     cout << "Da su dung:  " << usedIndexes.size() << " tu" << endl;
 }
 
-// ============================================================
+
 //  OPERATOR OVERLOADING
-// ============================================================
+
 
 // [] - truy cập từ theo chỉ số
 string WordManager::operator[](int index) const {

@@ -4,10 +4,9 @@
 #include <vector>
 #include <limits>
 
-// ============================================================
 //  INHERITANCE: UI kế thừa từ GameComponent
 //  ENCAPSULATION: score, lives, usedLetters là private
-// ============================================================
+
 class UI : public GameComponent {
 private:
     int score;                      // Điểm số (private)

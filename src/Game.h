@@ -4,10 +4,10 @@
 #include "InputHandler.h"
 #include "UI.h"
 
-// ============================================================
+
 //  Game: class điều phối toàn bộ - KHÔNG kế thừa GameComponent
 //  vì Game là controller, không phải một "thành phần" game
-// ============================================================
+
 class Game {
 private:
     WordManager  wordManager;
@@ -17,7 +17,6 @@ private:
 
     // ENCAPSULATION: private helper methods
     bool playRound();       // Chơi 1 ván
-    void showAllInfo() const;  // Demo polymorphism - gọi info() trên tất cả
 
 public:
     Game();

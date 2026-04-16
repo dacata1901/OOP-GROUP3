@@ -2,10 +2,10 @@
 #include "GameComponent.h"
 #include <string>
 
-// ============================================================
+
 //  INHERITANCE: InputHandler kế thừa từ GameComponent
 //  ENCAPSULATION: lastInput, errorCount là private
-// ============================================================
+
 class InputHandler : public GameComponent {
 private:
     char lastInput;     // Lưu input gần nhất (encapsulation)

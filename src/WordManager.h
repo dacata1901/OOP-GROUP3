@@ -4,10 +4,10 @@
 #include <vector>
 #include <set>
 
-// ============================================================
+
 //  INHERITANCE: WordManager kế thừa từ GameComponent
 //  ENCAPSULATION: words, usedIndexes là private
-// ============================================================
+
 class WordManager : public GameComponent {
 private:
     std::vector<std::string> words;

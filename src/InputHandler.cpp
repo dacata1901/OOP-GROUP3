@@ -5,15 +5,14 @@
 
 using namespace std;
 
-// ============================================================
+
 //  Constructor - INHERITANCE: gọi constructor lớp cha
-// ============================================================
+
 InputHandler::InputHandler()
     : GameComponent("InputHandler"), lastInput('\0'), errorCount(0) {}
 
-// ============================================================
+
 //  Lấy input 1 ký tự hợp lệ
-// ============================================================
 char InputHandler::getChar() {
     string input;
     cout << "Nhap 1 chu cai: ";
